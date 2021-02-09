@@ -20,14 +20,7 @@
               </b-table-column>
 
               <b-table-column field="user.first_name" label="First Name" sortable v-slot="props">
-                <template v-if="showDetailIcon">
-                  {{ props.row.user.first_name }}
-                </template>
-                <template v-else>
-                  <a @click="props.toggleDetails(props.row)">
-                      {{ props.row.user.first_name }}
-                  </a>
-                </template>
+                {{ props.row.user.first_name }}
               </b-table-column>
 
               <b-table-column field="user.last_name" label="Last Name" sortable v-slot="props">
@@ -40,7 +33,6 @@
                 </span>
               </b-table-column>
           </b-table>
-
       </section>
     </main>
   </div>

@@ -1,6 +1,14 @@
 <template>
     <section class="section">
         <h1 class="title">일일업무일지</h1>
+        <b-field label="업무일자">
+            <b-datepicker
+                v-model="date"
+                :date-formatter="select => getToDate(select)"
+                placeholder="Click to select..."
+                trap-focus>
+            </b-datepicker>
+        </b-field>
         <b-field label="Name">
             <b-input v-model="name"></b-input>
         </b-field>
@@ -36,8 +44,11 @@
 <script>
 export default {
   name: 'DailyDetail',
+  created () {
+  },
   data () {
     return {
+      date: new Date(),
       name: 'John Silver'
     }
   }
