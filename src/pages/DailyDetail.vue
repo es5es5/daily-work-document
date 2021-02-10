@@ -1,42 +1,53 @@
 <template>
     <section class="section">
-        <h1 class="title">일일업무일지</h1>
-        <b-field label="업무일자">
+        <h1 class="title">2020-05-05 (수)</h1>
+        <b-field
+          horizontal
+          label="날짜">
             <b-datepicker
-                v-model="date"
-                :date-formatter="select => getToDate(select)"
-                placeholder="Click to select..."
-                trap-focus>
+              v-model="daily.workDate"
+              :date-formatter="select => getToDate(select)"
+              placeholder="업무일을 선택해주세요."
+              trap-focus>
             </b-datepicker>
         </b-field>
-        <b-field label="Name">
-            <b-input v-model="name"></b-input>
+        <b-field
+          horizontal
+          label="제목">
+          <b-input v-model="daily.title"></b-input>
         </b-field>
 
-        <b-field label="Email"
-          type="is-danger"
-          message="This email is invalid">
-          <b-input type="email"
-            value="john@"
-            maxlength="30">
-          </b-input>
+        <b-field
+          horizontal
+          label="업무 리스트">
+          <b-table
+            bordered
+            hoverable
+            narrowed
+            :data="daily.task"
+            ref="taskTable">
+            <b-table-column field="number" label="No" numeric width="50" v-slot="props">
+              <b-input v-model="props.row.number" disabled></b-input>
+            </b-table-column>
+            <b-table-column field="contents" label="시간" width="100" v-slot="props">
+              <b-timepicker
+                v-model="props.row.taskTime"
+                hour-format="24"
+                :date-formatter="select => getToDate(select)"
+                placeholder="시간"
+                trap-focus>
+              </b-timepicker>
+            </b-table-column>
+            <b-table-column field="contents" label="내용" v-slot="props">
+              <b-input v-model="props.row.contents"></b-input>
+            </b-table-column>
+          </b-table>
         </b-field>
 
-        <b-field label="Username"
-          type="is-success"
-          message="This username is available">
-          <b-input value="johnsilver" maxlength="30"></b-input>
-        </b-field>
-
-        <b-field label="Password">
-          <b-input type="password"
-            value="iwantmytreasure"
-            password-reveal>
-          </b-input>
-        </b-field>
-
-        <b-field label="Message">
-          <b-input maxlength="200" type="textarea"></b-input>
+        <b-field
+          horizontal
+          label="특이사항">
+          <b-input maxlength="200" type="textarea" v-model="daily.memo"></b-input>
         </b-field>
     </section>
 </template>
@@ -48,9 +59,38 @@ export default {
   },
   data () {
     return {
+      daily: {
+        title: '오늘의 할 일',
+        workDate: new Date(),
+        memo: '오늘도 잘 놀았다.',
+        createtime: '',
+        task: [
+          {
+            number: 1,
+            taskTime: new Date('2020-05-05 10:20'),
+            contents: '산책가기',
+          },
+          {
+            number: 2,
+            taskTime: new Date('2020-05-05 16:50'),
+            contents: '코 자기',
+          },
+        ],
+      },
       date: new Date(),
       name: 'John Silver'
+    }
+  },
+  methods: {
+    hi () {
+      alert('hi')
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.title {
+  text-align: right;
+}
+</style>
